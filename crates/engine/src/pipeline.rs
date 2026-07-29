@@ -250,6 +250,11 @@ impl Pipeline {
                 }
             }
             EngineCmd::Pause => {
+                // Assert the pause directly. The gain ramps out for a clean
+                // stop, but `playing` must not be inferred from a completed
+                // ramp-down (line ~543): while muted the gain is already 0 and
+                // that inference is suppressed, so an inferred pause never fires.
+                self.playing = false;
                 self.target_gain = 0.0;
             }
             EngineCmd::SeekSecs(secs) => {
@@ -701,6 +706,32 @@ mod tests {
             .filter(|e| **e == EngineEvent::LoopWrapped)
             .count();
         assert!(wraps >= 1, "loop must keep wrapping while muted");
+    }
+
+    #[test]
+    fn pause_while_muted_stops_playback() {
+        // Muting (the user's speaker toggle) shares the engine mute flag with
+        // drill's mute-to-recall, so gain is already 0. Pause must still stop
+        // playback — not be swallowed by the "keep advancing while muted" path.
+        let mut p = Pipeline::new(sine_buf(10.0));
+        p.apply(EngineCmd::SetLoopSecs {
+            start: 0.0,
+            end: 1.0,
+        });
+        p.apply(EngineCmd::Play);
+        p.apply(EngineCmd::Mute(true));
+        let _ = render_secs(&mut p, 0.5); // advance silently while muted
+        p.apply(EngineCmd::Pause);
+        let (_out, events) = render_secs(&mut p, 0.5);
+        let last_playing = events.iter().rev().find_map(|e| match e {
+            EngineEvent::Position { playing, .. } => Some(*playing),
+            _ => None,
+        });
+        assert_eq!(
+            last_playing,
+            Some(false),
+            "pause while muted must stop playback"
+        );
     }
 
     #[test]
