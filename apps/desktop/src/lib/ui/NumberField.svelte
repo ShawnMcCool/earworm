@@ -29,7 +29,7 @@
     gap: 3px;
   }
   .field input {
-    width: 3.8em;
+    width: 5em;
     font-size: 11px;
     padding: 1px 3px;
   }
