@@ -3,6 +3,21 @@
 All notable user-facing changes to dredge, newest first. Entries are written
 at release time by `scripts/ship release`.
 
+## v0.15.0 — 2026-07-29
+
+### New
+
+- **Clicks can snap to the grid.** A new "single click snaps" setting (settings → editing): with grid snap on, clicking the waveform moves the playhead to the nearest bar, beat, or section edge instead of exactly where you clicked. Off by default — leave it off to keep free clicking.
+
+### Improved
+
+- **The notes box grows with your notes.** It no longer stops at a fixed height with its own scrollbar; long notes and tablature flow down the page.
+- **Number inputs are wider,** so larger values no longer get cut off.
+
+### Fixed
+
+- **Pausing while muted now really pauses.** Before, pausing with the sound muted kept the song advancing silently, so unmuting picked up somewhere further along.
+
 ## v0.14.2 — 2026-07-17
 
 ### Fixed
