@@ -225,8 +225,8 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
-    max-height: 280px;
-    overflow-y: auto;
+    /* Grow to fit the notes/tabs; the stage scrolls when the flow gets long
+       (no internal scroll window that would cap the box short of its content). */
   }
   .text-row {
     display: flex;
