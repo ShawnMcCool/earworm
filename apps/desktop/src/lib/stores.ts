@@ -450,6 +450,9 @@ export const latencyStatus = writable<LatencyStatus | null>(null);
 export const analysisError = writable<string | null>(null);
 /** Loop edges snap to downbeats while on (only meaningful with analysis). */
 export const gridSnap = writable(true);
+/** Single clicks on the waveform lock to the nearest grid target while grid
+ *  snap is on (persisted). Off = clicks seek exactly where they land. */
+export const clickSnap = writable(false);
 /** Active-play (persisted): when on, a click that places the playhead — a
  *  section header, a spot on the wave — also starts playback. Off = the click
  *  only moves the playhead. */
@@ -502,6 +505,7 @@ export const vram = writable<{ used: number[]; peak: number; min: number; total:
 /** Known keys in the server-side `settings` table. */
 export const UI_SCALE = "ui_scale";
 export const GRID_SNAP_DEFAULT = "grid_snap_default";
+export const CLICK_SNAP = "click_snap";
 export const ACTIVE_PLAY = "active_play";
 /** The whole window arrangement (left + right regions). Supersedes
  *  `panel_layout` / `library_collapsed` / `panels_collapsed`, which are read
@@ -637,6 +641,7 @@ export const actions = {
     const all = await cmd<Record<string, unknown>>("settings.get_all");
     settings.set(all);
     if (typeof all[GRID_SNAP_DEFAULT] === "boolean") gridSnap.set(all[GRID_SNAP_DEFAULT]);
+    if (typeof all[CLICK_SNAP] === "boolean") clickSnap.set(all[CLICK_SNAP]);
     if (typeof all[ACTIVE_PLAY] === "boolean") activePlay.set(all[ACTIVE_PLAY]);
     // The whole window arrangement: an existing `workspace` wins; else migrate
     // the legacy panel_layout / *_collapsed keys. Reconciled against ALL_TABS.
@@ -748,6 +753,10 @@ export const actions = {
   async setGridSnap(on: boolean): Promise<void> {
     gridSnap.set(on);
     await this.setSetting(GRID_SNAP_DEFAULT, on);
+  },
+  async setClickSnap(on: boolean): Promise<void> {
+    clickSnap.set(on);
+    await this.setSetting(CLICK_SNAP, on);
   },
   async setActivePlay(on: boolean): Promise<void> {
     activePlay.set(on);

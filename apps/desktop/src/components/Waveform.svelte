@@ -8,6 +8,7 @@
     activePlay,
     activeRoutine,
     allLoopsVisible,
+    clickSnap,
     currentLoop,
     drillSpan,
     gridLines,
@@ -766,8 +767,9 @@
   /** Pull a time onto the nearest snap target when grid snap is on. Targets are
    *  the section boundaries (the primary alignment for loops — so dragging a loop
    *  edge lands exactly on the verse/chorus edge) plus the beat/bar grid at the
-   *  chosen subdivision. Nearest within SNAP_PX wins; identity otherwise. */
-  function maybeSnap(secs: number): number {
+   *  chosen subdivision. Nearest within `thresholdPx` wins; identity otherwise
+   *  (Infinity locks to the nearest target regardless of distance). */
+  function maybeSnap(secs: number, thresholdPx = SNAP_PX): number {
     if (!get(gridSnap)) return secs;
     const open = get(openSong);
     if (!open) return secs;
@@ -778,7 +780,7 @@
     const a = open.analysis;
     if (a && a.beats.length) targets.push(...subdivisionTimes(a.beats, a.downbeats, get(gridSubdivision)));
     if (!targets.length) return secs;
-    return snapToGrid(secs, targets, view, SNAP_PX);
+    return snapToGrid(secs, targets, view, thresholdPx);
   }
 
   function onPointerMove(e: PointerEvent) {
@@ -896,7 +898,10 @@
         workingLoop.set(null);
         currentLoop.set(loop);
       }
-      void placePlayhead(Math.min(Math.max(xToSec(view, cx), 0), duration()));
+      // with click snap on, the seek locks to the nearest grid target (no
+      // pull radius — a click can't land between snap points)
+      const secs = Math.min(Math.max(xToSec(view, cx), 0), duration());
+      void placePlayhead(get(clickSnap) ? maybeSnap(secs, Infinity) : secs);
     }
   }
 

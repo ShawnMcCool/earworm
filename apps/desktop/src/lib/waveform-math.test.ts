@@ -241,6 +241,11 @@ describe("snapToGrid", () => {
   it("no downbeats → identity", () => {
     expect(snapToGrid(13.9, [], view, 10)).toBe(13.9);
   });
+
+  it("Infinity threshold locks to the nearest downbeat regardless of distance", () => {
+    expect(snapToGrid(12.9, downbeats, view, Infinity)).toBe(12);
+    expect(snapToGrid(19.9, downbeats, view, Infinity)).toBe(18);
+  });
 });
 
 describe("adjustWindow", () => {

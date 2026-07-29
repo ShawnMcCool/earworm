@@ -5,6 +5,7 @@
   import {
     actions,
     ANALYSIS_DEVICE,
+    clickSnap,
     COLOR_THEME,
     GRID_SNAP_DEFAULT,
     gridSnap,
@@ -157,6 +158,16 @@
     </div>
     <Button variant="toggle" active={snapDefault} onclick={toggleSnap}>
       {snapDefault ? "on" : "off"}
+    </Button>
+  </div>
+
+  <div class="setting">
+    <div class="text">
+      <span class="name">single click snaps</span>
+      <span class="desc">clicks lock to the nearest grid line while snap is on · off = click anywhere</span>
+    </div>
+    <Button variant="toggle" active={$clickSnap} onclick={() => void actions.setClickSnap(!$clickSnap)}>
+      {$clickSnap ? "on" : "off"}
     </Button>
   </div>
 </section>
