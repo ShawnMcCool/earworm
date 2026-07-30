@@ -10,14 +10,14 @@ Native libraries plus the toolchain.
 **Debian / Ubuntu**
 
 ```bash
-sudo apt install librubberband-dev libpipewire-0.3-dev libspa-0.2-dev \
+sudo apt install libpipewire-0.3-dev libspa-0.2-dev \
   libwebkit2gtk-4.1-dev libgtk-3-dev clang pkg-config build-essential
 ```
 
 **Arch**
 
 ```bash
-sudo pacman -S rubberband pipewire webkit2gtk-4.1 gtk3 clang pkgconf base-devel
+sudo pacman -S pipewire webkit2gtk-4.1 gtk3 clang pkgconf base-devel
 ```
 
 Plus [rustup](https://rustup.rs), Node + [pnpm](https://pnpm.io) (not npm), and
@@ -25,12 +25,15 @@ Plus [rustup](https://rustup.rs), Node + [pnpm](https://pnpm.io) (not npm), and
 
 | Dependency | Why it's needed |
 |------------|-----------------|
-| `rubberband` (≥3.0) | pitch-preserving time-stretch (Rubber Band R3), FFI-linked by the engine |
 | `pipewire` | audio output, plus the tuner's microphone input |
 | `webkit2gtk-4.1`, `gtk3` | the Tauri webview that renders the UI (desktop app only) |
 | `clang` / libclang | bindgen builds the PipeWire/`libspa-sys` bindings — the build fails without it |
 | `pkgconf`, `base-devel` | `pkg-config` + a C compiler/linker for the FFI crates |
 | rust · node · pnpm · just | build the Rust workspace and the Svelte/Tauri frontend |
+
+Rubber Band (the pitch-preserving time-stretch engine) is vendored at
+`crates/engine/vendor/rubberband` and compiled into the binaries — no system
+`rubberband` package is needed to build or run.
 
 ## Build
 

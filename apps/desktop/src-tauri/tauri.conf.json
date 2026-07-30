@@ -40,7 +40,6 @@
     "linux": {
       "deb": {
         "depends": [
-          "librubberband2",
           "libpipewire-0.3-0"
         ],
         "recommends": [

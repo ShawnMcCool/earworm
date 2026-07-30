@@ -1,5 +1,6 @@
 //! Hand-written bindings for the Rubber Band C API (rubberband-c.h).
-//! Verified against /usr/include/rubberband/rubberband-c.h (Rubber Band 4.0.0).
+//! Verified against vendor/rubberband/rubberband/rubberband-c.h (Rubber Band
+//! 4.0.0, vendored and compiled in by build.rs).
 #![allow(non_camel_case_types, dead_code)]
 use std::os::raw::{c_int, c_uint};
 

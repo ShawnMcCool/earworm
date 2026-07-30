@@ -57,7 +57,9 @@ clients. When adding a heavy command, follow the `*_phased` pattern in `app.rs`.
 ### The three crates
 
 - **`engine`** (`crates/engine`) — real-time audio. Decode (symphonia),
-  pitch-preserving stretch (Rubber Band R3 via `ffi.rs` + `stretch.rs`),
+  pitch-preserving stretch (Rubber Band R3 via `ffi.rs` + `stretch.rs`;
+  the library is vendored in `crates/engine/vendor/rubberband` and compiled
+  in by `build.rs` — see `VENDOR.md` there),
   sample-accurate crossfaded looping, PipeWire output and capture, filters
   (bass focus), waveform peaks. Audio thread talks to control thread over
   lock-free ring buffers (`ring.rs`, rtrb); commands/events flow through

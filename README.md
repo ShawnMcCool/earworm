@@ -96,11 +96,12 @@ A GPU is optional throughout — CPU works, slower. The virtualenvs and model we
 | Component | Required for | Install |
 |---|---|---|
 | **PipeWire 1.0+** | the app to run at all | system package (`pipewire`) |
-| **rubberband** | pitch-preserving slow-down (the core stretch engine — the app won't start without it) | `sudo pacman -S rubberband` · `sudo apt install librubberband2` · `sudo dnf install rubberband` |
-| **Runtime libraries** (webkit2gtk-4.1, gtk3, …) | the app to run | rubberband + these are pulled in automatically by the `.deb` (`apt`) and the `dredge` AUR package — nothing to do |
+| **Runtime libraries** (webkit2gtk-4.1, gtk3, …) | the app to run | pulled in automatically by the `.deb` (`apt`) and the `dredge` AUR package — nothing to do |
 | **ffmpeg** | MP3 export, mkv/webm containers, stem export | `sudo apt install ffmpeg` · `sudo pacman -S ffmpeg` |
 
-> The `.deb` and the `dredge` AUR package install rubberband for you; the line above is only for a hand-rolled setup (e.g. running the prebuilt `dredge-*-x86_64-linux.tar.gz` directly). The prebuilt binaries target Debian/Ubuntu library versions — on Arch, use the `dredge` package, which builds against your system's rubberband.
+> The stretch engine (Rubber Band) is compiled into dredge, so there is no
+> rubberband package to install. The prebuilt binaries target Debian/Ubuntu
+> library versions — on Arch, use the `dredge` AUR package.
 
 ### ML enabled
 
@@ -131,4 +132,6 @@ All ML pieces require **`uv`** on PATH: `sudo pacman -S uv`, or on Ubuntu `curl 
 ---
 
 Built with Rust, Tauri 2, and Svelte 5. Building from source or hacking on it?
-See **[DEVELOPMENT.md](DEVELOPMENT.md)**. MIT licensed.
+See **[DEVELOPMENT.md](DEVELOPMENT.md)**. MIT licensed; the binaries bundle
+the [Rubber Band Library](https://breakfastquay.com/rubberband/)
+(GPL-2.0-or-later), so distributed builds are GPL-governed.
