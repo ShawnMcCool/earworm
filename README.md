@@ -97,7 +97,7 @@ A GPU is optional throughout — CPU works, slower. The virtualenvs and model we
 |---|---|---|
 | **PipeWire 1.0+** | the app to run at all | system package (`pipewire`) |
 | **Runtime libraries** (webkit2gtk-4.1, gtk3, …) | the app to run | pulled in automatically by the `.deb` (`apt`) and the `dredge` AUR package — nothing to do |
-| **ffmpeg** | MP3 export, mkv/webm containers, stem export | `sudo apt install ffmpeg` · `sudo pacman -S ffmpeg` |
+| **ffmpeg** | MP3 export, opus/mkv/webm containers, stem export | `sudo apt install ffmpeg` · `sudo pacman -S ffmpeg` |
 
 > The stretch engine (Rubber Band) is compiled into dredge, so there is no
 > rubberband package to install. The prebuilt binaries target Debian/Ubuntu

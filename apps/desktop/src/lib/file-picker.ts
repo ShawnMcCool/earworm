@@ -2,7 +2,7 @@ import { open } from "@tauri-apps/plugin-dialog";
 
 // Video containers (mp4/mov) are accepted for their audio track only — never
 // played back. Symphonia decodes the audio and ignores the video.
-const AUDIO_EXTENSIONS = ["mp3", "flac", "ogg", "wav", "m4a", "mp4", "mov"];
+const AUDIO_EXTENSIONS = ["mp3", "flac", "ogg", "opus", "wav", "m4a", "mp4", "mov"];
 
 /** Native open dialog for a single audio or video file. Returns the chosen
  *  path, or null if the user cancelled. Video files are loaded for their audio
