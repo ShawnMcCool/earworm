@@ -25,20 +25,31 @@
 
 These work with the installed app — no ML setup.
 
+#### Playback
+
 - **Sample-accurate looping** — set a loop by dragging on the waveform; the seam is crossfaded. Loops are saved per song and take their names from the sections they span (`verse 2 → chorus 1`).
 - **Pitch-preserving speed** — 0.25–2.0× via Rubber Band R3 (compiled in); independent pitch shift, ±12 semitones plus cents.
+- **Bass focus** — octave-up plus low-pass to isolate basslines.
+
+#### Practice
+
 - **Drill** — tempo trainer that raises speed across passes, with region shaping and a recall mode that mutes playback so you play from memory.
 - **Practice routines** — saved sequences of practice blocks; each block sets a loop span, mix, speed, lead-in, and count-in, and the app steps through them as you play.
 - **Overdub recording** — record yourself (mic or audio interface) over the song, the selection, or the active loop. Recordings are latency-calibrated, stored in the song bundle, and play back over the mix.
-- **Bass focus** — octave-up plus low-pass to isolate basslines.
-- **Tuner** — chromatic tuner with note and cents and a hold-to-lock confirm. Works with no song loaded.
 - **Metronome and count-in** — manual BPM, or synced to the analyzed BPM once a song is analyzed.
+- **Tuner** — chromatic tuner with note and cents and a hold-to-lock confirm. Works with no song loaded.
+
+#### Songs and notes
+
 - **Sections and notes** — mark sections by hand; per-section free text with inline tablature, keyed to the section occurrence (`verse 2`).
 - **Markers** — set positions in the song and jump playback to them.
-- **MIDI foot pedal** — map pedals to transport, markers, and isolation snapshots with a learn flow, hands on the instrument.
-- **Export** — render the current mix (stem balance, speed, pitch, bass focus) to WAV, or MP3 with `ffmpeg`.
-- **Wide format support** — imports mp3, flac, ogg, opus, wav, and m4a, and takes the audio track from mp4/mov/webm/mkv video files (opus, webm, and mkv via `ffmpeg`).
 - **Song bundles** — each song is a self-contained directory (audio + `dredge.json` holding sections, loops, notes, analysis, recordings). Copy the folder to another machine and it loads with everything.
+- **Wide format support** — imports mp3, flac, ogg, opus, wav, and m4a, and takes the audio track from mp4/mov/webm/mkv video files (opus, webm, and mkv via `ffmpeg`).
+- **Export** — render the current mix (stem balance, speed, pitch, bass focus) to WAV, or MP3 with `ffmpeg`.
+
+#### Control and interface
+
+- **MIDI foot pedal** — map pedals to transport, markers, and isolation snapshots with a learn flow, hands on the instrument.
 - **Dock layout** — the right-hand tabs (structure, loops, routines, export, …) live in resizable panels; drag tabs to reorder, merge, or split panels.
 - **Control socket** — every command the UI uses is also available as JSON over a Unix socket; a headless daemon (`dredged`) runs the same engine without the UI.
 
