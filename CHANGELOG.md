@@ -3,6 +3,20 @@
 All notable user-facing changes to dredge, newest first. Entries are written
 at release time by `scripts/ship release`.
 
+## v0.16.0 — 2026-08-26
+
+### New
+
+- **Opus files can now be imported.** `.opus` shows up in the open dialog alongside the other formats. Decoding uses `ffmpeg`, same as webm and mkv.
+
+### Improved
+
+- **The stretch engine is now built into dredge.** Rubber Band 4.0 is compiled directly into the binaries, so there is no rubberband system package to install and no more version mismatches between distributions.
+
+### Fixed
+
+- **Stem separation and analysis no longer freeze when dredge is started from a terminal.** The background job could be suspended by the shell's job control and sit at 0% forever; it now runs detached from the terminal.
+
 ## v0.15.0 — 2026-07-29
 
 ### New
