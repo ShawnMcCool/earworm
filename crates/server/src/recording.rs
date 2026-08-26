@@ -37,7 +37,9 @@ pub fn resolve_span(span: Span, song_frames: i64) -> Option<(i64, i64)> {
 /// recording frame 0, and the detected onset is the round-trip latency.
 pub fn detect_click_onset(interleaved: &[f32], threshold: f32) -> Option<usize> {
     interleaved
-        .chunks_exact(CHANNELS)
+        .as_chunks::<CHANNELS>()
+        .0
+        .iter()
         .position(|f| f.iter().any(|s| s.abs() > threshold))
 }
 

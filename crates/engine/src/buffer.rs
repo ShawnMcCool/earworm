@@ -190,7 +190,7 @@ mod tests {
         set.settle();
         let mut out = vec![0.0f32; 6 * CHANNELS];
         set.mix_into(2, &mut out); // frames 2..8
-        for (f, frame) in out.chunks_exact(CHANNELS).enumerate() {
+        for (f, frame) in out.as_chunks::<CHANNELS>().0.iter().enumerate() {
             let (l, r) = set.frame(2 + f);
             assert!((frame[0] - l).abs() < 1e-6 && (frame[1] - r).abs() < 1e-6);
         }
@@ -218,7 +218,7 @@ mod tests {
         // First frame stepped once → still essentially full, NOT zero.
         assert!(out[0] > 0.99, "first frame jumped to {}", out[0]);
         // Monotonically non-increasing across the ramp (no zipper / overshoot).
-        for w in out.chunks_exact(CHANNELS).collect::<Vec<_>>().windows(2) {
+        for w in out.as_chunks::<CHANNELS>().0.windows(2) {
             assert!(w[1][0] <= w[0][0] + 1e-6, "gain not monotonic down");
         }
         // Reaches and rests at the target by the end of the window.

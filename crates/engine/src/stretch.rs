@@ -56,7 +56,13 @@ impl Stretcher {
     /// Feed interleaved stereo (≤ BLOCK_FRAMES frames).
     pub fn feed(&mut self, interleaved: &[f32]) {
         let frames = (interleaved.len() / CHANNELS).min(BLOCK_FRAMES);
-        for (f, fr) in interleaved.chunks_exact(CHANNELS).take(frames).enumerate() {
+        for (f, fr) in interleaved
+            .as_chunks::<CHANNELS>()
+            .0
+            .iter()
+            .take(frames)
+            .enumerate()
+        {
             self.in_l[f] = fr[0];
             self.in_r[f] = fr[1];
         }

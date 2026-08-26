@@ -480,7 +480,7 @@ impl Pipeline {
         // gain and the user volume each move at full-scale-per-5-ms, then the
         // frame is scaled by their product (no zipper noise on either knob).
         let step = 1.0 / GAIN_RAMP_FRAMES as f32;
-        for fr in out.chunks_exact_mut(CHANNELS) {
+        for fr in out.as_chunks_mut::<CHANNELS>().0 {
             if self.gain < self.target_gain {
                 self.gain = (self.gain + step).min(self.target_gain);
             } else if self.gain > self.target_gain {
@@ -514,7 +514,7 @@ impl Pipeline {
                 }
             } else {
                 let vol = self.volume;
-                for fr in out[..filled * CHANNELS].chunks_exact_mut(CHANNELS) {
+                for fr in out[..filled * CHANNELS].as_chunks_mut::<CHANNELS>().0 {
                     let cur = self.audible_frame;
                     while self.click_cursor < self.clicks.len() {
                         let mark = self.clicks[self.click_cursor].secs * SAMPLE_RATE as f64;

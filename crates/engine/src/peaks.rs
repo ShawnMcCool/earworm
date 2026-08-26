@@ -63,7 +63,9 @@ fn decode(bytes: &[u8]) -> Option<Peaks> {
         return None;
     }
     let buckets = payload
-        .chunks_exact(8)
+        .as_chunks::<8>()
+        .0
+        .iter()
         .map(|c| {
             let lo = f32::from_le_bytes(c[0..4].try_into().unwrap());
             let hi = f32::from_le_bytes(c[4..8].try_into().unwrap());

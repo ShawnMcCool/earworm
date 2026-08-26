@@ -210,7 +210,7 @@ fn to_stereo_planar(interleaved: &[f32], ch: usize) -> (Vec<f32>, Vec<f32>) {
             right.extend_from_slice(interleaved);
         }
         2 => {
-            for fr in interleaved.chunks_exact(2) {
+            for fr in interleaved.as_chunks::<2>().0 {
                 left.push(fr[0]);
                 right.push(fr[1]);
             }

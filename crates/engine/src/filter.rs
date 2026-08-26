@@ -86,7 +86,7 @@ impl Focus {
     }
 
     pub fn process_interleaved(&mut self, buf: &mut [f32]) {
-        for fr in buf.chunks_exact_mut(2) {
+        for fr in buf.as_chunks_mut::<2>().0 {
             for b in self.ch[0].iter_mut() {
                 fr[0] = b.process(fr[0]);
             }
