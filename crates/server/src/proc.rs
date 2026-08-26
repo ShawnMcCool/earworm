@@ -76,6 +76,10 @@ pub fn run_cancellable(mut cmd: Command, token: &CancelToken) -> Outcome {
         });
     }
     crate::stems::die_with_parent(&mut cmd);
+    // No tty stdin: the child runs in a background process group, and any
+    // grandchild that reads the terminal (torchcodec's ffmpeg does) would get
+    // SIGTTIN and suspend the whole job when dredge was launched from a shell.
+    cmd.stdin(std::process::Stdio::null());
     cmd.stdout(std::process::Stdio::piped());
     cmd.stderr(std::process::Stdio::piped());
 
